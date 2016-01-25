@@ -459,6 +459,7 @@ export class Table extends React.Component {
                  prevLabel={this.props.prevLabel}
                  nextLabel={this.props.nextLabel}
                  pageLabel={this.props.pageLabel}
+                 paginationLabel={this.props.paginationLabel}
                  key="paginator"
              />
              : null}
@@ -474,6 +475,7 @@ Table.defaultProps = {
     itemsPerPage: 0,
     filterBy: '',
     hideFilterInput: false,
+    paginationLabel: 'pagination',
     prevLabel: 'previous',
     nextLabel: 'next',
     pageLabel: 'page {number}'

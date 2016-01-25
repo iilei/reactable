@@ -30,7 +30,7 @@ export class Paginator extends React.Component {
         } else {
             return <li className="pagination-previous" key="prev">
                 <a href={pageHref(this.props.currentPage - 1)}
-                   aria-label="Previous page"
+                   aria-label={ label }
                    onClick={this.handlePrevious.bind(this)}>
                     { label }
                 </a>
@@ -46,7 +46,7 @@ export class Paginator extends React.Component {
         } else {
             return <li className="pagination-next" key="next">
                 <a href={pageHref(this.props.currentPage + 1)}
-                   aria-label="Next page"
+                   aria-label={ label }
                    key="next"
                    onClick={this.handleNext.bind(this)}>
                     { label }
@@ -113,7 +113,7 @@ export class Paginator extends React.Component {
             <tbody className="reactable-pagination">
                 <tr>
                     <td colSpan={this.props.colSpan}>
-                        <ul className="pagination text-center" role="navigation" aria-label="Pagination">
+                        <ul className="pagination text-center" role="navigation" aria-label={this.props.paginationLabel}>
                             {this.renderPrevious(this.props.prevLabel)}
                             {pageButtons}
                             {this.renderNext(this.props.nextLabel)}
