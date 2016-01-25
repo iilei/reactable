@@ -456,7 +456,11 @@ export class Table extends React.Component {
                  onPageChange={page => {
                      this.setState({ currentPage: page });
                  }}
-                 key="paginator"/>
+                 prevLabel={this.props.prevLabel}
+                 nextLabel={this.props.nextLabel}
+                 pageLabel={this.props.pageLabel}
+                 key="paginator"
+             />
              : null}
             {this.tfoot}
         </table>;
@@ -469,5 +473,8 @@ Table.defaultProps = {
     defaultSortDescending: false,
     itemsPerPage: 0,
     filterBy: '',
-    hideFilterInput: false
+    hideFilterInput: false,
+    prevLabel: 'previous',
+    nextLabel: 'next',
+    pageLabel: 'page {number}'
 };
