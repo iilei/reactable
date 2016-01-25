@@ -868,7 +868,7 @@ window.ReactDOM["default"] = window.ReactDOM;
                         _react["default"].createElement(
                             "a",
                             { href: pageHref(this.props.currentPage - 1),
-                                "aria-label": "Previous page",
+                                "aria-label": label,
                                 onClick: this.handlePrevious.bind(this) },
                             label
                         )
@@ -891,7 +891,7 @@ window.ReactDOM["default"] = window.ReactDOM;
                         _react["default"].createElement(
                             "a",
                             { href: pageHref(this.props.currentPage + 1),
-                                "aria-label": "Next page",
+                                "aria-label": label,
                                 key: "next",
                                 onClick: this.handleNext.bind(this) },
                             label
@@ -974,7 +974,7 @@ window.ReactDOM["default"] = window.ReactDOM;
                             { colSpan: this.props.colSpan },
                             _react["default"].createElement(
                                 "ul",
-                                { className: "pagination text-center", role: "navigation", "aria-label": "Pagination" },
+                                { className: "pagination text-center", role: "navigation", "aria-label": this.props.paginationLabel },
                                 this.renderPrevious(this.props.prevLabel),
                                 pageButtons,
                                 this.renderNext(this.props.nextLabel)
@@ -1473,6 +1473,7 @@ window.ReactDOM["default"] = window.ReactDOM;
                         prevLabel: this.props.prevLabel,
                         nextLabel: this.props.nextLabel,
                         pageLabel: this.props.pageLabel,
+                        paginationLabel: this.props.paginationLabel,
                         key: 'paginator'
                     }) : null,
                     this.tfoot
@@ -1492,6 +1493,7 @@ window.ReactDOM["default"] = window.ReactDOM;
         itemsPerPage: 0,
         filterBy: '',
         hideFilterInput: false,
+        paginationLabel: 'pagination',
         prevLabel: 'previous',
         nextLabel: 'next',
         pageLabel: 'page {number}'
