@@ -396,7 +396,8 @@ export class Table extends React.Component {
 
         // Apply filters
         let filteredChildren = children;
-        if (this.state.filter !== '') {
+        let filterResults = this.state.filter !== '';
+        if (filterResults) {
             filteredChildren = this.applyFilter(this.state.filter, filteredChildren);
         }
 
@@ -410,7 +411,12 @@ export class Table extends React.Component {
         let currentChildren = filteredChildren;
         if (this.props.itemsPerPage > 0) {
             itemsPerPage = this.props.itemsPerPage;
-            numPages = Math.ceil(filteredChildren.length / itemsPerPage);
+
+            if (filterResults) {
+                numPages = Math.ceil (filteredChildren.length / itemsPerPage);
+            } else {
+                numPages = Math.ceil (this.props.virtualTotalCount / itemsPerPage);
+            }
 
             if (currentPage > numPages - 1) {
                 currentPage = numPages - 1;
@@ -481,5 +487,6 @@ Table.defaultProps = {
     paginationLabel: 'pagination',
     prevLabel: 'previous',
     nextLabel: 'next',
-    pageLabel: 'page {number}'
+    pageLabel: 'page {number}',
+    virtualTotalCount: null,
 };

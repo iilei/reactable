@@ -1404,7 +1404,8 @@ window.ReactDOM["default"] = window.ReactDOM;
 
                 // Apply filters
                 var filteredChildren = children;
-                if (this.state.filter !== '') {
+                var filterResults = this.state.filter !== '';
+                if (filterResults) {
                     filteredChildren = this.applyFilter(this.state.filter, filteredChildren);
                 }
 
@@ -1418,7 +1419,12 @@ window.ReactDOM["default"] = window.ReactDOM;
                 var currentChildren = filteredChildren;
                 if (this.props.itemsPerPage > 0) {
                     itemsPerPage = this.props.itemsPerPage;
-                    numPages = Math.ceil(filteredChildren.length / itemsPerPage);
+
+                    if (filterResults) {
+                        numPages = Math.ceil(filteredChildren.length / itemsPerPage);
+                    } else {
+                        numPages = Math.ceil(this.props.virtualTotalCount / itemsPerPage);
+                    }
 
                     if (currentPage > numPages - 1) {
                         currentPage = numPages - 1;
@@ -1499,7 +1505,8 @@ window.ReactDOM["default"] = window.ReactDOM;
         paginationLabel: 'pagination',
         prevLabel: 'previous',
         nextLabel: 'next',
-        pageLabel: 'page {number}'
+        pageLabel: 'page {number}',
+        virtualTotalCount: null
     };
 });
 
