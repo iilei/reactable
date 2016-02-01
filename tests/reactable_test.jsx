@@ -978,9 +978,9 @@ describe('Reactable', function() {
             after(ReactableTestUtils.resetTestEnvironment);
 
             it('emits the number of the currently selected page (zero based) when onPageChange event is triggered', () => {
-                var page1 = $('#table tbody.reactable-pagination a.reactable-page-button')[0];
-                var page2 = $('#table tbody.reactable-pagination a.reactable-page-button')[1];
-                var page3 = $('#table tbody.reactable-pagination a.reactable-page-button')[2];
+                const page1 = $('#table tbody.reactable-pagination a.reactable-page-button')[0];
+                const page2 = $('#table tbody.reactable-pagination a.reactable-page-button')[1];
+                const page3 = $('#table tbody.reactable-pagination a.reactable-page-button')[2];
                 ReactTestUtils.Simulate.click(page2);
                 expect(currentPage).to.equal(1);
                 ReactTestUtils.Simulate.click(page1);
