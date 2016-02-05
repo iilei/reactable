@@ -797,10 +797,10 @@ window.ReactDOM["default"] = window.ReactDOM;
 });
 
 (function (global, factory) {
-    if (typeof define === 'function' && define.amd) {
-        define(['exports', 'react'], factory);
-    } else if (typeof exports !== 'undefined') {
-        factory(exports, require('react'));
+    if (typeof define === "function" && define.amd) {
+        define(["exports", "react"], factory);
+    } else if (typeof exports !== "undefined") {
+        factory(exports, require("react"));
     } else {
         var mod = {
             exports: {}
@@ -809,18 +809,20 @@ window.ReactDOM["default"] = window.ReactDOM;
         global.paginator = mod.exports;
     }
 })(this, function (exports, _react) {
-    'use strict';
+    "use strict";
 
-    var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+    var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
-    var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+    var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
 
-    function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+    function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-    function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+    function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+    var NUMBER_PLACEHOLDER_REGEX = /\{\s*number\s*\}/;
 
     function pageHref(num) {
-        return '#page-' + (num + 1);
+        return "#page-" + (num + 1);
     }
 
     var Paginator = (function (_React$Component) {
@@ -829,68 +831,101 @@ window.ReactDOM["default"] = window.ReactDOM;
         function Paginator() {
             _classCallCheck(this, Paginator);
 
-            _get(Object.getPrototypeOf(Paginator.prototype), 'constructor', this).apply(this, arguments);
+            _get(Object.getPrototypeOf(Paginator.prototype), "constructor", this).apply(this, arguments);
         }
 
         _createClass(Paginator, [{
-            key: 'handlePrevious',
+            key: "handlePrevious",
             value: function handlePrevious(e) {
                 e.preventDefault();
                 this.props.onPageChange(this.props.currentPage - 1);
             }
         }, {
-            key: 'handleNext',
+            key: "handleNext",
             value: function handleNext(e) {
                 e.preventDefault();
                 this.props.onPageChange(this.props.currentPage + 1);
             }
         }, {
-            key: 'handlePageButton',
+            key: "handlePageButton",
             value: function handlePageButton(page, e) {
                 e.preventDefault();
                 this.props.onPageChange(page);
             }
         }, {
-            key: 'renderPrevious',
-            value: function renderPrevious() {
-                if (this.props.currentPage > 0) {
-                    return _react['default'].createElement(
-                        'a',
-                        { className: 'reactable-previous-page',
-                            href: pageHref(this.props.currentPage - 1),
-                            onClick: this.handlePrevious.bind(this) },
-                        'Previous'
+            key: "renderPrevious",
+            value: function renderPrevious(label) {
+                if (this.props.currentPage < 1) {
+                    return _react["default"].createElement(
+                        "li",
+                        { className: "pagination-previous disabled", key: "prev" },
+                        label
+                    );
+                } else {
+                    return _react["default"].createElement(
+                        "li",
+                        { className: "pagination-previous", key: "prev" },
+                        _react["default"].createElement(
+                            "a",
+                            { href: pageHref(this.props.currentPage - 1),
+                                "aria-label": label,
+                                onClick: this.handlePrevious.bind(this) },
+                            label
+                        )
                     );
                 }
             }
         }, {
-            key: 'renderNext',
-            value: function renderNext() {
-                if (this.props.currentPage < this.props.numPages - 1) {
-                    return _react['default'].createElement(
-                        'a',
-                        { className: 'reactable-next-page',
-                            href: pageHref(this.props.currentPage + 1),
-                            onClick: this.handleNext.bind(this) },
-                        'Next'
+            key: "renderNext",
+            value: function renderNext(label) {
+                if (!(this.props.currentPage < this.props.numPages - 1)) {
+                    return _react["default"].createElement(
+                        "li",
+                        { className: "pagination-next disabled", key: "next" },
+                        label
+                    );
+                } else {
+                    return _react["default"].createElement(
+                        "li",
+                        { className: "pagination-next", key: "next" },
+                        _react["default"].createElement(
+                            "a",
+                            { href: pageHref(this.props.currentPage + 1),
+                                "aria-label": label,
+                                key: "next",
+                                onClick: this.handleNext.bind(this) },
+                            label
+                        )
                     );
                 }
             }
         }, {
-            key: 'renderPageButton',
-            value: function renderPageButton(className, pageNum) {
+            key: "renderPageButton",
+            value: function renderPageButton(isCurrent, pageNum) {
+                var label = this.props.pageLabel.replace(NUMBER_PLACEHOLDER_REGEX, pageNum + 1);
 
-                return _react['default'].createElement(
-                    'a',
-                    { className: className,
-                        key: pageNum,
-                        href: pageHref(pageNum),
-                        onClick: this.handlePageButton.bind(this, pageNum) },
-                    pageNum + 1
-                );
+                if (isCurrent) {
+                    return _react["default"].createElement(
+                        "li",
+                        { className: "current", key: pageNum },
+                        pageNum + 1
+                    );
+                } else {
+                    return _react["default"].createElement(
+                        "li",
+                        { key: pageNum },
+                        _react["default"].createElement(
+                            "a",
+                            { href: pageHref(pageNum),
+                                "aria-label": label,
+                                onClick: this.handlePageButton.bind(this, pageNum) },
+                            pageNum + 1
+                        )
+                    );
+                }
             }
         }, {
-            key: 'render',
+            key: "render",
             value: function render() {
                 if (typeof this.props.colSpan === 'undefined') {
                     throw new TypeError('Must pass a colSpan argument to Paginator');
@@ -912,13 +947,8 @@ window.ReactDOM["default"] = window.ReactDOM;
                 var upperHalf = pageButtonLimit - lowerHalf;
 
                 for (var i = 0; i < this.props.numPages; i++) {
-                    var showPageButton = false;
                     var pageNum = i;
-                    var className = "reactable-page-button";
-                    if (currentPage === i) {
-                        className += " reactable-current-page";
-                    }
-                    pageButtons.push(this.renderPageButton(className, pageNum));
+                    pageButtons.push(this.renderPageButton(currentPage === i, pageNum));
                 }
 
                 if (currentPage - pageButtonLimit + lowerHalf > 0) {
@@ -933,18 +963,22 @@ window.ReactDOM["default"] = window.ReactDOM;
                     pageButtons.splice(pageButtonLimit, pageButtons.length - pageButtonLimit);
                 }
 
-                return _react['default'].createElement(
-                    'tbody',
-                    { className: 'reactable-pagination' },
-                    _react['default'].createElement(
-                        'tr',
+                return _react["default"].createElement(
+                    "tbody",
+                    { className: "reactable-pagination" },
+                    _react["default"].createElement(
+                        "tr",
                         null,
-                        _react['default'].createElement(
-                            'td',
+                        _react["default"].createElement(
+                            "td",
                             { colSpan: this.props.colSpan },
-                            this.renderPrevious(),
-                            pageButtons,
-                            this.renderNext()
+                            _react["default"].createElement(
+                                "ul",
+                                { className: "pagination text-center", role: "navigation", "aria-label": this.props.paginationLabel },
+                                this.renderPrevious(this.props.prevLabel),
+                                pageButtons,
+                                this.renderNext(this.props.nextLabel)
+                            )
                         )
                     )
                 );
@@ -952,7 +986,7 @@ window.ReactDOM["default"] = window.ReactDOM;
         }]);
 
         return Paginator;
-    })(_react['default'].Component);
+    })(_react["default"].Component);
 
     exports.Paginator = Paginator;
     ;
@@ -1370,7 +1404,8 @@ window.ReactDOM["default"] = window.ReactDOM;
 
                 // Apply filters
                 var filteredChildren = children;
-                if (this.state.filter !== '') {
+                var filterResults = this.state.filter !== '';
+                if (filterResults) {
                     filteredChildren = this.applyFilter(this.state.filter, filteredChildren);
                 }
 
@@ -1384,7 +1419,12 @@ window.ReactDOM["default"] = window.ReactDOM;
                 var currentChildren = filteredChildren;
                 if (this.props.itemsPerPage > 0) {
                     itemsPerPage = this.props.itemsPerPage;
-                    numPages = Math.ceil(filteredChildren.length / itemsPerPage);
+
+                    if (filterResults) {
+                        numPages = Math.ceil(filteredChildren.length / itemsPerPage);
+                    } else {
+                        numPages = Math.ceil(this.props.virtualTotalCount / itemsPerPage);
+                    }
 
                     if (currentPage > numPages - 1) {
                         currentPage = numPages - 1;
@@ -1435,8 +1475,16 @@ window.ReactDOM["default"] = window.ReactDOM;
                         currentPage: currentPage,
                         onPageChange: function (page) {
                             _this.setState({ currentPage: page });
+                            if (_this.props.onPageChange) {
+                                _this.props.onPageChange(page);
+                            }
                         },
-                        key: 'paginator' }) : null,
+                        prevLabel: this.props.prevLabel,
+                        nextLabel: this.props.nextLabel,
+                        pageLabel: this.props.pageLabel,
+                        paginationLabel: this.props.paginationLabel,
+                        key: 'paginator'
+                    }) : null,
                     this.tfoot
                 );
             }
@@ -1453,7 +1501,12 @@ window.ReactDOM["default"] = window.ReactDOM;
         defaultSortDescending: false,
         itemsPerPage: 0,
         filterBy: '',
-        hideFilterInput: false
+        hideFilterInput: false,
+        paginationLabel: 'pagination',
+        prevLabel: 'previous',
+        nextLabel: 'next',
+        pageLabel: 'page {number}',
+        virtualTotalCount: null
     };
 });
 

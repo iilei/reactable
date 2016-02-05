@@ -1,5 +1,7 @@
 import React from 'react';
 
+const NUMBER_PLACEHOLDER_REGEX = /\{\s*number\s*\}/;
+
 function pageHref(num) {
     return `#page-${num + 1}`
 }
@@ -20,34 +22,54 @@ export class Paginator extends React.Component {
         this.props.onPageChange(page);
     }
 
-    renderPrevious() {
-        if(this.props.currentPage > 0) {
-            return <a className='reactable-previous-page'
-                      href={pageHref(this.props.currentPage - 1)}
-                      onClick={this.handlePrevious.bind(this)}>
-                        Previous
-                   </a>
+    renderPrevious(label) {
+        if (this.props.currentPage < 1) {
+            return <li className="pagination-previous disabled" key="prev">
+                { label }
+            </li>
+        } else {
+            return <li className="pagination-previous" key="prev">
+                <a href={pageHref(this.props.currentPage - 1)}
+                   aria-label={ label }
+                   onClick={this.handlePrevious.bind(this)}>
+                    { label }
+                </a>
+            </li>
         }
     }
 
-    renderNext() {
-        if(this.props.currentPage < this.props.numPages - 1) {
-            return <a className='reactable-next-page'
-                      href={pageHref(this.props.currentPage + 1)}
-                      onClick={this.handleNext.bind(this)}>
-                      Next
-                   </a>
+    renderNext(label) {
+        if (!(this.props.currentPage < this.props.numPages - 1)) {
+            return <li className="pagination-next disabled" key="next">
+                { label }
+            </li>
+        } else {
+            return <li className="pagination-next" key="next">
+                <a href={pageHref(this.props.currentPage + 1)}
+                   aria-label={ label }
+                   key="next"
+                   onClick={this.handleNext.bind(this)}>
+                    { label }
+                </a>
+            </li>
         }
     }
 
-    renderPageButton(className, pageNum) {
+    renderPageButton(isCurrent, pageNum) {
+        const label = this.props.pageLabel.replace(NUMBER_PLACEHOLDER_REGEX, pageNum + 1);
 
-        return <a className={className}
-                  key={pageNum}
-                  href={pageHref(pageNum)}
-                  onClick={this.handlePageButton.bind(this, pageNum)}>
-                  {pageNum + 1}
-              </a>
+        if (isCurrent) {
+            return <li className="current" key={pageNum}>{pageNum + 1}</li>
+        } else {
+            return <li key={pageNum}>
+                <a href={pageHref(pageNum)}
+                   aria-label={label}
+                   onClick={this.handlePageButton.bind(this, pageNum)}>
+                    {pageNum + 1}
+                </a>
+            </li>
+        }
+
     }
 
     render() {
@@ -71,13 +93,8 @@ export class Paginator extends React.Component {
         let upperHalf = (pageButtonLimit - lowerHalf);
 
         for (let i = 0; i < this.props.numPages; i++) {
-            let showPageButton = false;
             let pageNum = i;
-            let className = "reactable-page-button";
-            if (currentPage === i) {
-                className += " reactable-current-page";
-            }
-            pageButtons.push( this.renderPageButton(className, pageNum));
+            pageButtons.push( this.renderPageButton((currentPage === i), pageNum));
         }
 
         if(currentPage - pageButtonLimit + lowerHalf > 0) {
@@ -96,9 +113,11 @@ export class Paginator extends React.Component {
             <tbody className="reactable-pagination">
                 <tr>
                     <td colSpan={this.props.colSpan}>
-                        {this.renderPrevious()}
-                        {pageButtons}
-                        {this.renderNext()}
+                        <ul className="pagination text-center" role="navigation" aria-label={this.props.paginationLabel}>
+                            {this.renderPrevious(this.props.prevLabel)}
+                            {pageButtons}
+                            {this.renderNext(this.props.nextLabel)}
+                        </ul>
                     </td>
                 </tr>
             </tbody>
