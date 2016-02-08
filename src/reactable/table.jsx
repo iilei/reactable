@@ -423,7 +423,7 @@ export class Table extends React.Component {
             }
 
             pagination = true;
-            currentChildren = filteredChildren.slice(
+            currentChildren = this.props.virtualPagination ? filteredChildren : filteredChildren.slice(
                 currentPage * itemsPerPage,
                 (currentPage + 1) * itemsPerPage
             );

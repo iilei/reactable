@@ -1080,6 +1080,30 @@
                     expect($('#table tbody.reactable-data tr').length).to.equal(9);
                 });
             });
+
+            describe('onPageChange hook', function () {
+                var currentPage = undefined;
+                var callback = function callback(page) {
+                    currentPage = page;
+                };
+                before(function () {
+                    ReactDOM.render(React.createElement(Reactable.Table, { className: 'table', id: 'table', data: [{ 'Name': 'Griffin Smith', 'Age': '18' }, { 'Age': '23', 'Name': 'Lee Salminen' }, { 'Age': '28', 'Position': 'Developer' }, { 'Name': 'Griffin Smith', 'Age': '18' }, { 'Age': '23', 'Name': 'Test Person' }, { 'Name': 'Ian Zhang', 'Age': '28', 'Position': 'Developer' }, { 'Name': 'Griffin Smith', 'Age': '18', 'Position': 'Software Developer' }, { 'Age': '23', 'Name': 'Lee Salminen' }, { 'Age': '28', 'Position': 'Developer' }], itemsPerPage: 4, onPageChange: callback }), ReactableTestUtils.testNode());
+                });
+
+                after(ReactableTestUtils.resetTestEnvironment);
+
+                it('emits the number of the currently selected page (zero based) when onPageChange event is triggered', function () {
+                    var page1 = $('#table tbody.reactable-pagination a.reactable-page-button')[0];
+                    var page2 = $('#table tbody.reactable-pagination a.reactable-page-button')[1];
+                    var page3 = $('#table tbody.reactable-pagination a.reactable-page-button')[2];
+                    ReactTestUtils.Simulate.click(page2);
+                    expect(currentPage).to.equal(1);
+                    ReactTestUtils.Simulate.click(page1);
+                    expect(currentPage).to.equal(0);
+                    ReactTestUtils.Simulate.click(page3);
+                    expect(currentPage).to.equal(2);
+                });
+            });
         });
 
         describe('sorting', function () {
