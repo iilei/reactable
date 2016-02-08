@@ -1431,7 +1431,7 @@ window.ReactDOM["default"] = window.ReactDOM;
                     }
 
                     pagination = true;
-                    currentChildren = filteredChildren.slice(currentPage * itemsPerPage, (currentPage + 1) * itemsPerPage);
+                    currentChildren = this.props.virtualPagination ? filteredChildren : filteredChildren.slice(currentPage * itemsPerPage, (currentPage + 1) * itemsPerPage);
                 }
 
                 // Manually transfer props
