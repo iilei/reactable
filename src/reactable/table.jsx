@@ -409,7 +409,7 @@ export class Table extends React.Component {
         let pageButtonLimit = this.props.pageButtonLimit || 10;
 
         let currentChildren = filteredChildren;
-        if (this.props.itemsPerPage > 0) {
+        if (this.props.showPaginator === true && this.props.itemsPerPage > 0) {
             itemsPerPage = this.props.itemsPerPage;
 
             if (filterResults) {
@@ -489,4 +489,5 @@ Table.defaultProps = {
     nextLabel: 'next',
     pageLabel: 'page {number}',
     virtualTotalCount: null,
+    showPaginator: true,
 };

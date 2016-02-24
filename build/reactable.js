@@ -1417,7 +1417,7 @@ window.ReactDOM["default"] = window.ReactDOM;
                 var pageButtonLimit = this.props.pageButtonLimit || 10;
 
                 var currentChildren = filteredChildren;
-                if (this.props.itemsPerPage > 0) {
+                if (this.props.showPaginator === true && this.props.itemsPerPage > 0) {
                     itemsPerPage = this.props.itemsPerPage;
 
                     if (filterResults) {
@@ -1506,7 +1506,8 @@ window.ReactDOM["default"] = window.ReactDOM;
         prevLabel: 'previous',
         nextLabel: 'next',
         pageLabel: 'page {number}',
-        virtualTotalCount: null
+        virtualTotalCount: null,
+        showPaginator: true
     };
 });
 
