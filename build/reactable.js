@@ -1382,7 +1382,7 @@ window.ReactDOM["default"] = window.ReactDOM;
                 var pageButtonLimit = this.props.pageButtonLimit || 10;
 
                 var currentChildren = filteredChildren;
-                if (this.props.itemsPerPage > 0) {
+                if (this.props.showPaginator === true && this.props.itemsPerPage > 0) {
                     itemsPerPage = this.props.itemsPerPage;
                     numPages = Math.ceil(filteredChildren.length / itemsPerPage);
 
@@ -1456,7 +1456,8 @@ window.ReactDOM["default"] = window.ReactDOM;
         defaultSortDescending: false,
         itemsPerPage: 0,
         filterBy: '',
-        hideFilterInput: false
+        hideFilterInput: false,
+        showPaginator: true
     };
 });
 
