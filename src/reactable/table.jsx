@@ -408,7 +408,7 @@ export class Table extends React.Component {
         let pageButtonLimit = this.props.pageButtonLimit || 10;
 
         let currentChildren = filteredChildren;
-        if (this.props.itemsPerPage > 0) {
+        if (this.props.showPaginator === true && this.props.itemsPerPage > 0) {
             itemsPerPage = this.props.itemsPerPage;
             numPages = Math.ceil(filteredChildren.length / itemsPerPage);
 
@@ -472,5 +472,6 @@ Table.defaultProps = {
     defaultSortDescending: false,
     itemsPerPage: 0,
     filterBy: '',
-    hideFilterInput: false
+    hideFilterInput: false,
+    showPaginator: true,
 };
